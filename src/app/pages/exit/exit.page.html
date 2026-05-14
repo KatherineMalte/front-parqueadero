@@ -1,0 +1,46 @@
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Registrar salida</p>
+    <h1>Salida de vehículo</h1>
+  </div>
+  <p class="page-note">Escribe la placa para registrar la salida y presentar el resumen de pago.</p>
+</section>
+
+<div class="exit-card">
+  <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+    <label>
+      <span>Placa</span>
+      <input formControlName="plate" placeholder="ABC123" maxlength="8" />
+    </label>
+
+    <button class="primary-button" type="submit" [disabled]="isSubmitting()">
+      <span *ngIf="!isSubmitting()">Registrar salida</span>
+      <span *ngIf="isSubmitting()">Procesando...</span>
+    </button>
+
+    <p *ngIf="toastMessage()" class="error-message">{{ toastMessage() }}</p>
+  </form>
+</div>
+
+<div class="modal-overlay" *ngIf="modalVisible()">
+  <div class="modal-panel">
+    <h2>Resumen de salida</h2>
+    <div class="modal-row">
+      <span>Placa</span>
+      <strong>{{ exitResult()?.plate }}</strong>
+    </div>
+    <div class="modal-row">
+      <span>Tipo</span>
+      <strong>{{ exitResult()?.type }}</strong>
+    </div>
+    <div class="modal-row">
+      <span>Minutos</span>
+      <strong>{{ exitResult()?.minutes }}</strong>
+    </div>
+    <div class="modal-row">
+      <span>Total pagado</span>
+      <strong>$ {{ exitResult()?.total }}</strong>
+    </div>
+    <button class="primary-button" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

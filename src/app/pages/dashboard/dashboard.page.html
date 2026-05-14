@@ -1,0 +1,52 @@
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Dashboard</p>
+    <h1>Gestión de parqueadero</h1>
+  </div>
+  <p class="page-note">Monitorea los activos, ingresos y operaciones de salida en una sola vista.</p>
+</section>
+
+<div class="grid-cards">
+  <article class="info-card">
+    <p class="card-label">Vehículos activos</p>
+    <h2>{{ activeCount() }}</h2>
+  </article>
+  <article class="info-card">
+    <p class="card-label">Total parqueados hoy</p>
+    <h2>{{ totalParkedToday() }}</h2>
+  </article>
+  <article class="info-card">
+    <p class="card-label">Ingresos del día</p>
+    <h2>$ {{ incomeToday() | number }}</h2>
+  </article>
+  <article class="info-card">
+    <p class="card-label">Salidas realizadas</p>
+    <h2>{{ exitCount() }}</h2>
+  </article>
+</div>
+
+<section class="activity-panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Actividad reciente</p>
+      <h2>Vehículos activos</h2>
+    </div>
+    <span class="badge">Actualizado automáticamente</span>
+  </div>
+
+  <div class="list-box">
+    <div class="list-row header-row">
+      <span>Placa</span>
+      <span>Tipo</span>
+      <span>Ingreso</span>
+      <span>Estado</span>
+    </div>
+    <div *ngIf="activeRecords().length === 0" class="empty-state">No hay vehículos activos por el momento.</div>
+    <div *ngFor="let record of activeRecords()" class="list-row data-row">
+      <span>{{ record.vehicle.plate }}</span>
+      <span>{{ record.vehicle.type }}</span>
+      <span>{{ record.entryTime | date:'HH:mm, dd/MM/yyyy' }}</span>
+      <span class="status-pill">{{ record.status }}</span>
+    </div>
+  </div>
+</section>

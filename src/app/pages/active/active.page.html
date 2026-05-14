@@ -1,0 +1,35 @@
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Vehículos activos</p>
+    <h1>Control de ingresos en tiempo real</h1>
+  </div>
+  <p class="page-note">Visualiza los vehículos dentro del estacionamiento y registra salidas con un solo clic.</p>
+</section>
+
+<div class="table-card">
+  <div *ngIf="toastMessage()" class="table-toast" [class.success]="toastType() === 'success'" [class.error]="toastType() === 'error'">
+    {{ toastMessage() }}
+  </div>
+
+  <div class="table-header">
+    <span>Placa</span>
+    <span>Tipo</span>
+    <span>Hora ingreso</span>
+    <span>Estado</span>
+    <span>Acción</span>
+  </div>
+
+  <div *ngIf="activeRecords().length === 0" class="empty-state">
+    No hay vehículos activos. Registra una entrada para comenzar.
+  </div>
+
+  <div *ngFor="let record of activeRecords()" class="table-row">
+    <span>{{ record.vehicle.plate }}</span>
+    <span>{{ record.vehicle.type }}</span>
+    <span>{{ record.entryTime | date:'HH:mm dd/MM' }}</span>
+    <span class="status-pill">{{ record.status }}</span>
+    <button class="secondary-button" (click)="registerExit(record.vehicle.plate)" [disabled]="loadingExit()">
+      {{ loadingExit() ? 'Procesando...' : 'Registrar salida' }}
+    </button>
+  </div>
+</div>

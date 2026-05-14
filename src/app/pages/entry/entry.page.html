@@ -1,0 +1,33 @@
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Registrar entrada</p>
+    <h1>Nuevo ingreso de vehículo</h1>
+  </div>
+  <p class="page-note">Captura la placa y el tipo de vehículo para registrar la entrada.</p>
+</section>
+
+<div class="form-card">
+  <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+    <label>
+      <span>Placa</span>
+      <input formControlName="plate" placeholder="ABC123" maxlength="8" />
+    </label>
+
+    <label>
+      <span>Tipo de vehículo</span>
+      <select formControlName="type">
+        <option value="CAR">CAR</option>
+        <option value="MOTORCYCLE">MOTORCYCLE</option>
+      </select>
+    </label>
+
+    <button class="primary-button" type="submit" [disabled]="isSubmitting()">
+      <span *ngIf="!isSubmitting()">Registrar</span>
+      <span *ngIf="isSubmitting()">Guardando...</span>
+    </button>
+  </form>
+
+  <div *ngIf="toastMessage()" class="toast" [class.success]="toastType() === 'success'" [class.error]="toastType() === 'error'">
+    {{ toastMessage() }}
+  </div>
+</div>
